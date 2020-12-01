@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { tipo_academica } from 'src/app/models/tipo-academica'
-import { TipoAcademicaService } from 'src/app/services/tipo-academica.service';
+import { tipo_academica } from 'src/app/tipo-academica/tipo-academica/models/tipo-academica'
+import { TipoAcademicaService } from 'src/app/tipo-academica/tipo-academica/services/tipo-academica.service';
 import Swal from 'sweetalert2'
 import { NgForm } from '@angular/forms';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-tipo-academica',
   templateUrl: './tipo-academica.component.html',
@@ -11,7 +11,7 @@ import { NgForm } from '@angular/forms';
 })
 export class TipoAcademicaComponent implements OnInit {
   tipos: tipo_academica[];
-  constructor(public tipo_academicaService: TipoAcademicaService) { }
+  constructor(public tipo_academicaService: TipoAcademicaService, private router:Router) { }
   estado = this.tipo_academicaService.selectedTipo.ESTADO == 1;
   ngOnInit(): void {
     this.getTipos()
