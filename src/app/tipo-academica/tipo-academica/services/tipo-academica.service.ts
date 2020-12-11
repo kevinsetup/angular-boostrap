@@ -37,66 +37,22 @@ export class TipoAcademicaService {
 
 
 
-  getTipo(): Observable<any>{
-    return this.http.get(this.url+"tipo", {headers : this.addAuthorizationHeader()}).pipe(
-      catchError(e =>{
-        this.isNoAutorization(e);
-        return throwError(e);
-      })
-    );
+  getTipo(): Observable<tipo_academica[]>{
+    return this.http.get<tipo_academica[]>(this.url+"tipo");
+  
    
-    }
+  }
 
   addTipo(tipo_academica: tipo_academica){
-       return this.http.post(this.url+"tipo", tipo_academica, {headers:this.addAuthorizationHeader()}).pipe(
-        map((response:any) =>response),
-        catchError(e =>{
-          if(this.isNoAutorization(e)){
-          return throwError(e)
-          }
-          if(e.status == 400){
-            return throwError(e);
-          }
-          console.error(e.error.mensaje);
-          Swal.fire(e.error.mensaje, e.error.error, 'error');
-          return throwError(e);
-        })
-        );
-       
+       return this.http.post(this.url+"tipo", tipo_academica, {headers: this.httpHeaders});
   }
   updateTipo(tipo_academica: tipo_academica){
-     return this.http.put(this.url + 'tipo' +`/${tipo_academica.ID_TIPO_UNIDAD}`, tipo_academica,{headers:this.addAuthorizationHeader()}).pipe(
-      map((response:any) =>response),
-      catchError(e =>{
-        if(this.isNoAutorization(e)){
-        return throwError(e)
-        }
-        if(e.status == 400){
-          return throwError(e);
-        }
-        console.error(e.error.mensaje);
-        Swal.fire(e.error.mensaje, e.error.error, 'error');
-        return throwError(e);
-      })
-
-     )
+     return this.http.put(this.url + 'tipo' +`/${tipo_academica.ID_TIPO_UNIDAD}`, tipo_academica, {headers: this.httpHeaders});
   }
-
-
   deleteTipo(id : number){
-    return this.http.delete(this.url + 'tipo' + `/${id}`,{headers:this.addAuthorizationHeader()}).pipe(
-      catchError(e =>{
-        if(this.isNoAutorization(e)){
-        return throwError(e)
-        }
-        console.error(e.error.mensaje);
-        Swal.fire(e.error.mensaje, e.error.error, 'error');
-        return throwError(e);
-      })
-      
-
-    );
+    return this.http.delete(this.url + 'tipo' + `/${id}`);
   }
+
 
 
 

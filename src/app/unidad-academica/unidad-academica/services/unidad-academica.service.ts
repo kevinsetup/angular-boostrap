@@ -46,95 +46,31 @@ export class UnidadAcademicaService {
 
 
 
-
-
-
-
-
-  getAcad(): Observable<any>{
-    return this.http.get(this.url+"unidad" , {headers : this.addAuthorizationHeader()}).pipe(
-      catchError(e =>{
-        this.isNoAutorization(e);
-        return throwError(e);
-      })
-    );
+  getAcad(): Observable<unidad_academica[]>{
+    return this.http.get<unidad_academica[]>(this.url+"unidad");
   
    
   }
-  getCampus(): Observable<any>{
-    return this.http.get(this.url+"unidad/campus", {headers : this.addAuthorizationHeader()}).pipe(
-      catchError(e =>{
-        this.isNoAutorization(e);
-        return throwError(e);
-      })
-    );
+  getCampus(): Observable<campus[]>{
+    return this.http.get<campus[]>(this.url+"unidad/campus");
   
    
   }
   getCampusFacultad(nom : String){
-    return this.http.get<facultad[]>(this.url+"unidad/campus/"+nom,{headers:this.addAuthorizationHeader()}).pipe(
-      catchError(e =>{
-        if(this.isNoAutorization(e)){
-        return throwError(e)
-        }
-        console.error(e.error.mensaje);
-        Swal.fire(e.error.mensaje, e.error.error, 'error');
-        return throwError(e);
-      })
-
-
-
-    );
+    return this.http.get<facultad[]>(this.url+"unidad/campus/"+nom);
   
    
   }
   postAcademica(unidad_acad : unidad_academica){
-    return this.http.post(this.url+"unidad", unidad_acad , {headers:this.addAuthorizationHeader()}).pipe(
-      map((response:any) =>response),
-        catchError(e =>{
-          if(this.isNoAutorization(e)){
-          return throwError(e)
-          }
-          if(e.status == 400){
-            return throwError(e);
-          }
-          console.error(e.error.mensaje);
-          Swal.fire(e.error.mensaje, e.error.error, 'error');
-          return throwError(e);
-        })
-        
-
-
-    );
+    return this.http.post(this.url+"unidad", unidad_acad , {headers: this.httpHeaders});
   }
   putAcademica(unidad_acad : unidad_academica){
-    return this.http.put(this.url + 'unidad' +`/${unidad_acad.ID_UNIDAD}`, unidad_acad,{headers:this.addAuthorizationHeader()}).pipe(
-      map((response:any) =>response),
-      catchError(e =>{
-        if(this.isNoAutorization(e)){
-        return throwError(e)
-        }
-        if(e.status == 400){
-          return throwError(e);
-        }
-        console.error(e.error.mensaje);
-        Swal.fire(e.error.mensaje, e.error.error, 'error');
-        return throwError(e);
-      })
-    );
+    return this.http.put(this.url + 'unidad' +`/${unidad_acad.ID_UNIDAD}`, unidad_acad, {headers: this.httpHeaders});
   }
   deleteAcademica(id : number){
-    return this.http.delete(this.url + "unidad"  + `/${id}`, {headers:this.addAuthorizationHeader()}).pipe(
-      catchError(e =>{
-        if(this.isNoAutorization(e)){
-        return throwError(e)
-        }
-        console.error(e.error.mensaje);
-        Swal.fire(e.error.mensaje, e.error.error, 'error');
-        return throwError(e);
-      })
-    );
+    return this.http.delete(this.url + "unidad"  + `/${id}`);
   }
+
 
  
 

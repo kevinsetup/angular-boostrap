@@ -122,7 +122,12 @@ export class UnidadAcademicaComponent implements OnInit {
             showConfirmButton: false,
             timer: 1500
           })
+          this.getTipos();
+          this.resetForm(form);
+          this.getFacultad(0);
+          this.getCampus();
         }
+       
       )
     }
   }
